@@ -1,0 +1,23 @@
+<div class="card-box">
+
+
+    {{!-- card of a single recipe --}}
+    {{#each recipes}}
+
+    <div class="card" style="width: 18rem;">
+        {{!-- <img src="{{this.}}" class="card-img-top" alt="..."> --}}
+        {{#each objRecipe}}
+        <div class="card-body">
+            <h5 class="card-title">{{this.recipeName}}</h5>
+
+            {{#each this.steps}}
+            <p class="card-text">{{this.stepNumber}} {{this.stepText}}</p>
+            {{/each}}
+            {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+        </div>
+        {{/each}}
+    </div>
+
+    {{/each}}
+
+</div>
