@@ -12,7 +12,6 @@ require("dotenv").config();
 
 // * * * * * * * * *
 // *** This section probably needs to be disabled for heroku **
-CREATE "recipes_db" IF NOT EXISTS;
 const mysql = require("mysql2");
 const connection = mysql.createConnection({
 	host: config.host,
