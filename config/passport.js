@@ -8,7 +8,8 @@ const db = require("../models");
 
 module.exports = function(passport) {
 	// Attempt to authentificate through an email address
-	passport.use(new LocalStrategy({usernameField: "email"}, (email, password, done) => {
+	passport.use(new LocalStrategy({usernameField: "email", passReqToCallback : true}, (email, password, done) => {
+		
 		// Search the email address in the database
 		db.User.findOne({ where: { email: email }})
 			.then(user => {
