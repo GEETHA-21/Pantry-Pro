@@ -7,11 +7,13 @@ var db = require("./models");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+console.log("Hi");
+
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
-
+console.log("After app.use statements");
 // Handlebars
 app.engine(
   "handlebars",
@@ -20,11 +22,14 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
-
+console.log("After app set");
 // Routes
-require("./routes/userRoutes.js")(app);
-require("./routes/users.js")(app);
-require("./routes/usersAuthHelper.js")(app);
+app.use(require("./routes/userRoutes.js"));
+console.log("After userRoutes");
+app.use(require("./routes/users.js"));
+console.log("After users");
+app.use(require("./routes/usersAuthHelper.js"));
+console.log("After usersAuthHelper");
 
 var syncOptions = { force: false };
 
