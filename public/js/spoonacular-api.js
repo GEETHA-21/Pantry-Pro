@@ -2,17 +2,8 @@ const API_KEY = "f00927d28fd14a4fa274e892d9a2af03";
 
 var ingredientList = [];
 var items = ingredientList.map(ingredients => ingredients.toLowerCase());
-//function that gets ingredients from user input
-// function getIngredients() {
-//   $(".addItem").on("click", function(event) {
-//     event.preventDefault();
-//     var ingredient = ingredientList.push(ingredient);
-//   });
-//   console.log(ingredientList);
-// }
-//functiont that gets recipe ID's of ingredients users inputed
 
-$("#addToList").on("click", function(event) {
+$("#addToList").on("click", function (event) {
   $(".itemBox").empty();
   event.preventDefault();
   // console.log(items);
@@ -60,12 +51,15 @@ $("#addToList").on("click", function(event) {
 });
 // for (var i = 0; i < ingredientList.length; i++) {
 // }
-$("#enterList").on("click", function(event) {
+$("#enterList").on("click", function (event) {
   event.preventDefault();
   getRecipeIDs(ingredientList);
 });
 
 function getRecipeIDs(list) {
+
+
+
   var ingredients = list.toString();
   console.log(`Ingredients: ${ingredients}`);
   var queryUrl =
@@ -78,20 +72,31 @@ function getRecipeIDs(list) {
     url: queryUrl,
     method: "GET"
   }).then(
-    function(result) {
+    function (result) {
       var recipeIdArray = [];
       for (var i = 0; i < result.length; i++) {
         console.log(`result: ${result[i].id}`);
         recipeIdArray.push(result[i].id);
       }
       // return result
-      getRecipeInfo(recipeIdArray);
+      // getRecipeInfo(recipeIdArray);
+      getRecipeServer(recipeIdArray);
       // console.log(`Query URL: ${queryUrl}`);
     },
-    function(error) {
+    function (error) {
       console.log(error);
     }
   );
+}
+function getRecipeServer(list) {
+  console.log(list);
+  var obj = {
+    "ids": list
+  };
+  console.log("obj", obj);
+  $.post("/api/recipes", obj).then(function () {
+    console.log("back");
+  });
 }
 
 function getRecipeInfo(list) {
@@ -99,18 +104,19 @@ function getRecipeInfo(list) {
     var queryUrl =
       "https://api.spoonacular.com/recipes/" +
       list[i].toString() +
-      "/information?includeNutrition=false&number=10&instructionsRequired=true&apiKey=" +
+      "/information?includeNutrition=false&number=5&instructionsRequired=true&apiKey=" +
       API_KEY;
 
     $.ajax({
       url: queryUrl,
       method: "GET"
     }).then(
-      function(result) {
-        // var recipeIdArray = [];
+      function (result) {
+        // var recipeIdArray = [
+
         // for (var i = 0; i < result.length; i++) {
         console.log(`Recipe name: ${result.title}`);
-        console.log(result.name);
+        console.log(result);
         //   recipeIdArray.push(result[i].id);
         // }
         // return result
@@ -121,7 +127,7 @@ function getRecipeInfo(list) {
               var stepNumber = result.analyzedInstructions[i].steps[j].number;
               var stepText = result.analyzedInstructions[i].steps[j].step;
 
-              console.log(`${stepNumber}. ${stepText}`);
+              // console.log(`${stepNumber}. ${stepText}`);
 
               //<div class="card" style="width: 18rem;">
               //   <img src="..." class="card-img-top" alt="...">
@@ -137,7 +143,7 @@ function getRecipeInfo(list) {
             .addClass("card")
             .attr("style", "width: 18rem;");
           var image = $("<img>")
-            .attr("src", "")
+            .attr("src", `${result.image}`)
             .addClass("card-img-top")
             .attr("alt", `${result.title}`);
           var contentDiv = $("<div>").addClass("card-body");
@@ -146,20 +152,31 @@ function getRecipeInfo(list) {
             .text(`${result.title}`);
           var cardText = $("<p>")
             .addClass("card-text")
-            .text("random-text");
+            .text(`Ready in ${result.readyInMinutes} minutes!`);
           var stepsButton = $("<a>")
-            .attr("href", "#")
+            .attr("type", "button")
+            .attr("id", "viewRecipeBtn")
             .addClass("btn btn-primary")
-            .text("go somewhere");
+            .attr("data-toggle", "modal")
+            .attr("data-target", "#recipeModal")
+            .text("View Recipe");
           $(".card-box").append(
             cardDiv.append(image),
             contentDiv.append(cardTitle, cardText, stepsButton)
           );
           // console.log(result.analyzedInstructions);
-          console.log(`Query URL: ${queryUrl}`);
+          // console.log(`Query URL: ${queryUrl}`);
+          $(document).on("click", "#viewRecipeBtn", function (event) {
+            event.preventDefault();
+            console.log(this);
+            $("#recipeModal").modal("show");
+
+            $("#modalTitle").text(`${result.name}`);
+            $("#modalBody").text(`${stepNumber}. ${stepText}`);
+          });
         }
       },
-      function(error) {
+      function (error) {
         console.log(error);
       }
     );

@@ -22,6 +22,7 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
+<<<<<<< HEAD
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 require("./routes/userRoutes")(app);
@@ -29,6 +30,11 @@ require("./routes/users")(app);
 require("./routes/usersAuthHelper")(app);
 
 
+=======
+require("./routes/userRoutes.js")(app);
+require("./routes/users.js")(app);
+require("./routes/usersAuthHelper.js")(app);
+>>>>>>> 122dd41628e380d62c893902aa473e56caa81bbb
 
 var syncOptions = { force: false };
 
