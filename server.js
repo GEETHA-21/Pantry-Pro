@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // eslint-disable-next-line no-undef
+=======
+>>>>>>> 6c71d20967f1cc02d3a564d1fb0981a1a63f3fa2
 require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
@@ -8,13 +11,18 @@ var db = require("./models");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+<<<<<<< HEAD
 const session = require("express-session");
 const flash = require("connect-flash");
+=======
+console.log("Hi");
+>>>>>>> 6c71d20967f1cc02d3a564d1fb0981a1a63f3fa2
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
+<<<<<<< HEAD
 
 // Handlebars
 app.engine(
@@ -65,12 +73,32 @@ app.use("/users", userRoutes);
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
+=======
+console.log("After app.use statements");
+// Handlebars
+app.engine(
+  "handlebars",
+  exphbs({
+    defaultLayout: "main"
+  })
+);
+app.set("view engine", "handlebars");
+console.log("After app set");
+// Routes
+app.use(require("./routes/userRoutes.js"));
+console.log("After userRoutes");
+app.use(require("./routes/users.js"));
+console.log("After users");
+app.use(require("./routes/usersAuthHelper.js"));
+console.log("After usersAuthHelper");
+>>>>>>> 6c71d20967f1cc02d3a564d1fb0981a1a63f3fa2
 
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {
+<<<<<<< HEAD
     syncOptions.force = true;
 }
 
@@ -89,6 +117,20 @@ db.sequelize.sync(syncOptions).then(function () {
             PORT
         );
     });
+=======
+  syncOptions.force = true;
+}
+
+// Starting the server, syncing our models ------------------------------------/
+db.sequelize.sync(syncOptions).then(function() {
+  app.listen(PORT, function() {
+    console.log(
+      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+      PORT,
+      PORT
+    );
+  });
+>>>>>>> 6c71d20967f1cc02d3a564d1fb0981a1a63f3fa2
 });
 
 module.exports = app;
