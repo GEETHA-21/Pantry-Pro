@@ -8,7 +8,7 @@ let flash = require("connect-flash");
 let db = require("./models");
 
 let app = express();
-let PORT = process.env.PORT || 3000;
+let PORT = process.env.PORT || 3001;
 let sessionStore = new session.MemoryStore;
 
 console.log("Hi");
@@ -40,14 +40,14 @@ app.engine(
 app.set("view engine", "handlebars");
 console.log("After app set");
 // Routes
-app.use(require("./routes/userRoutes.js"));
+require("./routes/userRoutes.js");
 console.log("After userRoutes");
-app.use(require("./routes/users.js"));
+require("./routes/users.js");
 console.log("After users");
-app.use(require("./routes/usersAuthHelper.js"));
+require("./routes/usersAuthHelper.js");
 console.log("After usersAuthHelper");
-app.use(require(".routes/apiRoutes.js"));
-app.use(require(".routes/htmlRoutes.js"))
+require("./routes/apiRoutes.js")(app);
+// require("./routes/htmlRoutes.js")(app);
 
 var syncOptions = { force: false };
 
