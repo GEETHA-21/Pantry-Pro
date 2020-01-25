@@ -1,23 +1,69 @@
 <div class="card-box">
 
 
-    {{!-- card of a single recipe --}}
     {{#each recipes}}
 
     <div class="card" style="width: 18rem;">
-        {{!-- <img src="{{this.}}" class="card-img-top" alt="..."> --}}
-        {{#each objRecipe}}
+        <img class="card-img-top" src="{{this.imageLink}}" alt="Card image cap">
+
         <div class="card-body">
             <h5 class="card-title">{{this.recipeName}}</h5>
 
-            {{#each this.steps}}
-            <p class="card-text">{{this.stepNumber}} {{this.stepText}}</p>
-            {{/each}}
-            {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+
+            {{!-- {{#each this.steps}}
+            <p class="card-text">{{this.stepNumber}}. {{this.stepText}}</p>
+            {{/each}} --}}
+
         </div>
-        {{/each}}
+        <button class="btn btn-info btn-lg" data-target="#recipeModal" data-toggle="modal"> View Recipe</button>
+
     </div>
 
     {{/each}}
 
+</div>
+
+<div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+
+                {{#each recipes}}
+
+
+                <div>
+
+                    <div class="modal-body">
+                        <h5 class="modal-title">{{this.recipeName}}</h5>
+                        {{#each this.ingredients}}
+                        <p class="modal-text">{{this.stepNumber}}. {{this.stepText}}</p>
+                        {{/each}}
+                        {{#each this.steps}}
+                        <p class="modal-text">{{this.stepNumber}}. {{this.stepText}}</p>
+                        {{/each}}
+
+                    </div>
+
+                </div>
+
+                {{/each}}
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
 </div>

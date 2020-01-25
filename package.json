@@ -1,7 +1,7 @@
 {
   "name": "pantry-pro",
   "version": "1.0.0",
-  "description": "## Team Members   * Geetha   * Niviamanjee   * Tulus",
+  "description": "## Team Members   * Geetha   * Nivi   * Tulus",
   "main": "server.js",
   "dependencies": {
     "axios": "^0.19.1",

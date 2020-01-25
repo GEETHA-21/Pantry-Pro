@@ -2,6 +2,15 @@ const API_KEY = "f00927d28fd14a4fa274e892d9a2af03";
 
 var ingredientList = [];
 var items = ingredientList.map(ingredients => ingredients.toLowerCase());
+//function that gets ingredients from user input
+// function getIngredients() {
+//   $(".addItem").on("click", function(event) {
+//     event.preventDefault();
+//     var ingredient = ingredientList.push(ingredient);
+//   });
+//   console.log(ingredientList);
+// }
+//functiont that gets recipe ID's of ingredients users inputed
 
 $("#addToList").on("click", function (event) {
   $(".itemBox").empty();
@@ -57,9 +66,6 @@ $("#enterList").on("click", function (event) {
 });
 
 function getRecipeIDs(list) {
-
-
-
   var ingredients = list.toString();
   console.log(`Ingredients: ${ingredients}`);
   var queryUrl =
@@ -79,8 +85,7 @@ function getRecipeIDs(list) {
         recipeIdArray.push(result[i].id);
       }
       // return result
-      // getRecipeInfo(recipeIdArray);
-      getRecipeServer(recipeIdArray);
+      getRecipeInfo(recipeIdArray);
       // console.log(`Query URL: ${queryUrl}`);
     },
     function (error) {
@@ -88,23 +93,13 @@ function getRecipeIDs(list) {
     }
   );
 }
-function getRecipeServer(list) {
-  console.log(list);
-  var obj = {
-    "ids": list
-  };
-  console.log("obj", obj);
-  $.post("/api/recipes", obj).then(function () {
-    console.log("back");
-  });
-}
 
 function getRecipeInfo(list) {
   for (var i = 0; i < list.length; i++) {
     var queryUrl =
       "https://api.spoonacular.com/recipes/" +
       list[i].toString() +
-      "/information?includeNutrition=false&number=5&instructionsRequired=true&apiKey=" +
+      "/information?includeNutrition=false&number=10&instructionsRequired=true&apiKey=" +
       API_KEY;
 
     $.ajax({
@@ -112,11 +107,10 @@ function getRecipeInfo(list) {
       method: "GET"
     }).then(
       function (result) {
-        // var recipeIdArray = [
-
+        // var recipeIdArray = [];
         // for (var i = 0; i < result.length; i++) {
         console.log(`Recipe name: ${result.title}`);
-        console.log(result);
+        console.log(result.name);
         //   recipeIdArray.push(result[i].id);
         // }
         // return result
@@ -126,8 +120,8 @@ function getRecipeInfo(list) {
             for (j = 0; j < result.analyzedInstructions[i].steps.length; j++) {
               var stepNumber = result.analyzedInstructions[i].steps[j].number;
               var stepText = result.analyzedInstructions[i].steps[j].step;
-
-              // console.log(`${stepNumber}. ${stepText}`);
+              //takes the values from buttons to the new var with ajax. use if else to match the values.
+              console.log(`${stepNumber}. ${stepText}`);
 
               //<div class="card" style="width: 18rem;">
               //   <img src="..." class="card-img-top" alt="...">
@@ -143,7 +137,7 @@ function getRecipeInfo(list) {
             .addClass("card")
             .attr("style", "width: 18rem;");
           var image = $("<img>")
-            .attr("src", `${result.image}`)
+            .attr("src", "")
             .addClass("card-img-top")
             .attr("alt", `${result.title}`);
           var contentDiv = $("<div>").addClass("card-body");
@@ -152,28 +146,17 @@ function getRecipeInfo(list) {
             .text(`${result.title}`);
           var cardText = $("<p>")
             .addClass("card-text")
-            .text(`Ready in ${result.readyInMinutes} minutes!`);
+            .text("random-text");
           var stepsButton = $("<a>")
-            .attr("type", "button")
-            .attr("id", "viewRecipeBtn")
+            .attr("href", "#")
             .addClass("btn btn-primary")
-            .attr("data-toggle", "modal")
-            .attr("data-target", "#recipeModal")
-            .text("View Recipe");
+            .text("go somewhere");
           $(".card-box").append(
             cardDiv.append(image),
             contentDiv.append(cardTitle, cardText, stepsButton)
           );
           // console.log(result.analyzedInstructions);
-          // console.log(`Query URL: ${queryUrl}`);
-          $(document).on("click", "#viewRecipeBtn", function (event) {
-            event.preventDefault();
-            console.log(this);
-            $("#recipeModal").modal("show");
-
-            $("#modalTitle").text(`${result.name}`);
-            $("#modalBody").text(`${stepNumber}. ${stepText}`);
-          });
+          console.log(`Query URL: ${queryUrl}`);
         }
       },
       function (error) {
