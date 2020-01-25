@@ -16,7 +16,7 @@ require("dotenv").config();
 const mysql = require("mysql2");
 const connection = mysql.createConnection({
   host: config.host,
-  // port: 3306,
+  port: 3306,
   user: config.username,
   password: process.env.PASSWORD
 });
@@ -36,18 +36,18 @@ if (config.use_env_variable) {
 
 // Load models into sequialize
 fs.readdirSync(__dirname)
-  .filter(function(file) {
+  .filter(function (file) {
     return (
       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
     );
   })
-  .forEach(function(file) {
+  .forEach(function (file) {
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 
 // UserProfile makes use of "associate" now
-Object.keys(db).forEach(function(modelName) {
+Object.keys(db).forEach(function (modelName) {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

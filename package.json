@@ -1,7 +1,7 @@
 {
   "name": "pantry-pro",
   "version": "1.0.0",
-  "description": "## Team Members   * Geetha   * Niviamanjee   * Tulus",
+  "description": "## Team Members   * Geetha   * Nivi   * Tulus",
   "main": "server.js",
   "dependencies": {
     "axios": "^0.19.1",
@@ -27,7 +27,8 @@
   },
   "scripts": {
     "test": "npm run lint && cross-env NODE_ENV=test mocha --reporter spec --exit",
-    "start": "node server.js"
+    "start": "node server.js",
+    "compile:sass": "node-sass sass/main.scss styles/style.css -w"
   },
   "repository": {
     "type": "git",
