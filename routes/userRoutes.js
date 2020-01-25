@@ -12,9 +12,13 @@ const ensureAuthenticated = require("./usersAuthHelper");
 
 // Gateway route for a user's page area
 // this route is NOT protected
-router.get("/index", (req, res) => {
-  if (req.user) res.redirect("/users/" + req.user.id);
-  else res.redirect("/users/login");
+// router.get("/index", (req, res) => {
+//   if (req.user) res.redirect("/users/" + req.user.id);
+//   else res.redirect("/users/login");
+// });
+
+router.get("/", (req, res) => {
+    res.render("index");
 });
 
 // User's personalized page route

@@ -1,17 +1,35 @@
 require("dotenv").config();
-var express = require("express");
-var exphbs = require("express-handlebars");
+let express = require("express");
+let exphbs = require("express-handlebars");
+let session = require("express-session");
+let passport = require("passport");
+let flash = require("connect-flash");
 
-var db = require("./models");
+let db = require("./models");
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+let app = express();
+let PORT = process.env.PORT || 3000;
+let sessionStore = new session.MemoryStore;
+
+console.log("Hi");
 
 // Middleware
+app.use(session({
+  cookie: { maxAge: 60000 },
+  store: sessionStore,
+  saveUninitialized: true,
+  resave: 'true',
+  secret: 'secret'
+}));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use(passport.initialize());
+app.use(passport.session());
 
+// Might not be needed
+app.use(flash());
+console.log("After app.use statements");
 // Handlebars
 app.engine(
   "handlebars",
@@ -20,14 +38,14 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
-
+console.log("After app set");
 // Routes
-require("./routes/apiRoutes")(app);
-require("./routes/userRoutes")(app);
-require("./routes/users")(app);
-require("./routes/usersAuthHelper")(app);
-
-
+app.use(require("./routes/userRoutes.js"));
+console.log("After userRoutes");
+app.use(require("./routes/users.js"));
+console.log("After users");
+app.use(require("./routes/usersAuthHelper.js"));
+console.log("After usersAuthHelper");
 
 var syncOptions = { force: false };
 
