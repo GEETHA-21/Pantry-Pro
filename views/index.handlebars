@@ -1,42 +1,3 @@
-<<<<<<< HEAD
-<div id="websiteDescription">Share and discover all your favorite recipes!</div>
-
-<div id="breaker"></div>
-
-
-<div id="favoriteRecipes">
-  {{!-- insert handlebars for each loop here --}}
-  {{!-- instead of favRecipes.js --}}
-  <div class="card-columns">
-   {{#each recipes}}
-      <div class="favs" id={{this.id}}>
-        <div class="card mt-2">
-          {{#if this.imageSrc}}
-          <img src="{{this.imageSrc}}" alt="" class="card-img-top img-thumbnail rounded">
-          {{/if}}
-          <div class="card-body">
-            <h5 class="card-title">{{this.name}}</h5>
-            <p class="card-text">
-              <a href="{{this.description}}" target="_blank">{{this.description}}</a>
-            </p>
-          </div>
-        </div>
-      </div>
-   {{/each}}
-  </div>
-</div>
-{{!-- </div> --}}
-
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-</script>
-
-<script src="/js/index.js"></script>
-<script src="/js/recipePage.js"></script>
-
-{{!--
-<script type="text/javascript" src="/js/favRecipes.js" charset="utf-8"></script> --}}
-=======
 {{!-- <div id="home">
     <div class="container">
         <div class="row">
@@ -95,4 +56,3 @@
 
 
 </div>
->>>>>>> 6c71d20967f1cc02d3a564d1fb0981a1a63f3fa2
