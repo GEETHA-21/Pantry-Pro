@@ -24,13 +24,13 @@ router.get("/logout", (req, res) => {
 });
 
 // User Login Form Post Route
-router.post("/login", (req, res, next) => {
-	passport.authenticate("local", {
-		successRedirect: "/users/index",
-		failureRedirect: "/users/login",
-		failureFlash: true
-	})(req, res, next);
-});
+// router.post("/login", (req, res, next) => {
+// 	passport.authenticate("local", {
+// 		successRedirect: "/users/index",
+// 		failureRedirect: "/users/login",
+// 		failureFlash: true
+// 	})(req, res, next);
+// });
 
 // User Register Page Route
 router.get("/register", (req, res) => {

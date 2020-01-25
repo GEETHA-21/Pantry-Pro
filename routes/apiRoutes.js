@@ -1,5 +1,4 @@
 var db = require("../models");
-<<<<<<< HEAD
 var multiparty = require("multiparty");
 var fs = require("fs");
 const Op = db.Sequelize.Op
@@ -56,11 +55,11 @@ module.exports = function (app) {
 	// Find/insert one product and return the id
 	app.post("/api/products", function (req, res) {
 		db.Products.findOrCreate({
-				where: {
-					name: req.body.name
-				},
-				defaults: req.body
-			})
+			where: {
+				name: req.body.name
+			},
+			defaults: req.body
+		})
 			.spread(function (product, created) {
 				console.log(created);
 				console.log(product.id)
@@ -84,12 +83,12 @@ module.exports = function (app) {
 	//
 	app.post("/api/ingredient/:recipeid/:productid", function (req, res) {
 		db.Ingredients.findOrCreate({
-				where: {
-					RecipeId: req.params.recipeid,
-					ProductId: req.params.productid
-				},
-				defaults: req.body
-			})
+			where: {
+				RecipeId: req.params.recipeid,
+				ProductId: req.params.productid
+			},
+			defaults: req.body
+		})
 			.spread((ingr, created) => {
 				console.log("Ingredient inserted successfully");
 				return;
@@ -165,19 +164,19 @@ module.exports = function (app) {
 		const productCondition = {}; // for db.Products
 		const _params = req.params.recipes.split('&').map(kv => kv.split('='));
 		const params = {};
-		
+
 		// params = Object.fromEntries(params);	
 		// TypeError: Object.fromEntries is not a function --> not available in Node?
 		_params.map(kv => params[kv[0]] = kv[1]);
-		
+
 		console.log("PARAMS", JSON.stringify(params));
-		
+
 		['mealType', 'gluten_free', 'dairy_free', 'vegetarian', 'vegan'].forEach(item => {
 			if (params[item] === 'true') params[item] = true;
 			if (params[item] === 'false') params[item] = false;
-			if (item in params) searchCondition[item]= params[item];
+			if (item in params) searchCondition[item] = params[item];
 		});
-		
+
 		if ("proteinType" in params) {
 			searchCondition["name"] = { [Op.like]: `%${params["proteinType"]}%` };
 			productCondition["name"] = { [Op.like]: `%${params["proteinType"]}%` };
@@ -186,7 +185,7 @@ module.exports = function (app) {
 			searchCondition["name"] = { [Op.like]: `%${params["veggieType"]}%` };
 			productCondition["name"] = { [Op.like]: `%${params["veggieType"]}%` };
 		}
-		
+
 		db.Recipes.findAll({
 			include: [{
 				model: db.Products,
@@ -195,103 +194,103 @@ module.exports = function (app) {
 			}],
 			where: searchCondition
 		})
-		.then(result => {
-			// console.log(`Found ${result.count} recipe(s)`);
-			// res.json(result);
-			res.render("searchResults", {
-				recipes: result.map(recipe => fixRecipeImage(recipe))
-			});
-		}).catch(err => console.log("Recipe search error", err));
+			.then(result => {
+				// console.log(`Found ${result.count} recipe(s)`);
+				// res.json(result);
+				res.render("searchResults", {
+					recipes: result.map(recipe => fixRecipeImage(recipe))
+				});
+			}).catch(err => console.log("Recipe search error", err));
 	})
 };
-=======
+
 var axios = require("axios");
 
 const API_KEY = "f00927d28fd14a4fa274e892d9a2af03";
 module.exports = function (app) {
-    // Get all examples
-    app.post("/api/recipes", function (req, res) {
-        var list = req.body;
-        console.log(list);
-        for (key in list) {
-            list = list[key]
-        }
-        var hbsobj = {
-            recipes: []
-        }
-        for (var i = 0; i < list.length; i++) {
+	// Get all examples
+	app.post("/api/recipes", function (req, res) {
+		var list = req.body;
+		console.log(list);
+		for (key in list) {
+			list = list[key]
+		}
+		var hbsobj = {
+			recipes: []
+		}
+		for (var i = 0; i < list.length; i++) {
 
-            var queryUrl =
-                "https://api.spoonacular.com/recipes/" +
-                list[i].toString() +
-                "/information?includeNutrition=false&number=5&instructionsRequired=true&apiKey=" +
-                API_KEY;
-            console.log(queryUrl)
-            axios.get(queryUrl).then(function (result) {
-                // var recipeIdArray = [
+			var queryUrl =
+				"https://api.spoonacular.com/recipes/" +
+				list[i].toString() +
+				"/information?includeNutrition=false&number=5&instructionsRequired=true&apiKey=" +
+				API_KEY;
+			console.log(queryUrl)
+			axios.get(queryUrl).then(function (result) {
+				// var recipeIdArray = [
 
-                // for (var i = 0; i < result.length; i++) {
-                console.log(`Recipe name: ${result.data.title}`);
-                //console.log(result.data);
-                console.log(result.data.analyzedInstructions)
-            });
-        }
-        //   recipeIdArray.push(result[i].id);
-        // }
-        // return result
+				// for (var i = 0; i < result.length; i++) {
+				console.log(`Recipe name: ${result.data.title}`);
+				//console.log(result.data);
+				console.log(result.data.analyzedInstructions)
+			});
+		}
+		//   recipeIdArray.push(result[i].id);
+		// }
+		// return result
 
-        if (result.data.analyzedInstructions.length > 0) {
-            var objRecipe = {
-                recipeName: result.data.title,
-                steps: []
+		if (result.data.analyzedInstructions.length > 0) {
+			var objRecipe = {
+				recipeName: result.data.title,
+				steps: []
 
-            }
-            for (var i = 0; i < result.data.analyzedInstructions.length; i++) {
-                console.log(result.data.analyzedInstructions[i].steps);
-                var objStep = {
-                    stepNumber: 0,
-                    stepText: ""
-                }
-                for (j = 0; j < result.data.analyzedInstructions[i].steps.length; j++) {
-                    objStep.stepNumber = result.data.analyzedInstructions[i].steps[j].number;
-                    objStep.stepText = result.data.analyzedInstructions[i].steps[j].step;
+			}
+			for (var i = 0; i < result.data.analyzedInstructions.length; i++) {
+				console.log(result.data.analyzedInstructions[i].steps);
+				var objStep = {
+					stepNumber: 0,
+					stepText: ""
+				}
+				for (j = 0; j < result.data.analyzedInstructions[i].steps.length; j++) {
+					objStep.stepNumber = result.data.analyzedInstructions[i].steps[j].number;
+					objStep.stepText = result.data.analyzedInstructions[i].steps[j].step;
 
-                }
-                console.log(objStep)
-                objRecipe.steps.push(objStep)
-            }
-        }
-        // console.log(`${stepNumber}. ${stepText}`);
+				}
+				console.log(objStep)
+				objRecipe.steps.push(objStep)
+			}
+		}
+		// console.log(`${stepNumber}. ${stepText}`);
 
-        //<div class="card" style="width: 18rem;">
-        //   <img src="..." class="card-img-top" alt="...">
-        //   <div class="card-body">
-        //     <h5 class="card-title">Card title</h5>
-        //     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        //     <a href="#" class="btn btn-primary">Go somewhere</a>
-        //   </div>
-        // </div>
-        hbsobj.recipes.push(objRecipe)
-        console.log(hbsobj)
-        res.render("recipes", hbsobj)
+		//<div class="card" style="width: 18rem;">
+		//   <img src="..." class="card-img-top" alt="...">
+		//   <div class="card-body">
+		//     <h5 class="card-title">Card title</h5>
+		//     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+		//     <a href="#" class="btn btn-primary">Go somewhere</a>
+		//   </div>
+		// </div>
+		hbsobj.recipes.push(objRecipe)
+		console.log(hbsobj)
+		res.render("recipes", hbsobj)
 
 
-    });
+	});
 
-    // Create a new example
-    app.post("/api/examples", function (req, res) {
-        db.Example.create(req.body).then(function (dbExample) {
-            res.json(dbExample);
-        });
-    });
+	// Create a new example
+	app.post("/api/examples", function (req, res) {
+		db.Example.create(req.body).then(function (dbExample) {
+			res.json(dbExample);
+		});
+	});
 
-    // Delete an example by id
-    app.delete("/api/examples/:id", function (req, res) {
-        db.Example.destroy({ where: { id: req.params.id } }).then(function (
-            dbExample
-        ) {
-            res.json(dbExample);
-        });
-    });
+	// Delete an example by id
+	app.delete("/api/examples/:id", function (req, res) {
+		db.Example.destroy({ where: { id: req.params.id } }).then(function (
+			dbExample
+		) {
+			res.json(dbExample);
+		});
+	});
 };
->>>>>>> 6c71d20967f1cc02d3a564d1fb0981a1a63f3fa2
+
