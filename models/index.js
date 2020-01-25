@@ -12,10 +12,6 @@ require("dotenv").config();
 
 // * * * * * * * * *
 // *** This section probably needs to be disabled for heroku **
-<<<<<<< HEAD
-=======
-
->>>>>>> 122dd41628e380d62c893902aa473e56caa81bbb
 const mysql = require("mysql2");
 const connection = mysql.createConnection({
   host: config.host,

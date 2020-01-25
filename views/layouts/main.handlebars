@@ -11,14 +11,12 @@
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">PantryPro</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
@@ -26,11 +24,10 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Diet
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu diet" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Vegetarian</a>
+                        <a class="dropdown-item" href="#">Vegan</a>
+                        <a class="dropdown-item" href="#">Very Healthy</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -38,18 +35,24 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Cook Time
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu cookTime" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">15 minutes or less</a>
+                        <a class="dropdown-item" href="#">30 minutes or less</a>
+                        <a class="dropdown-item" href="#">45 minutes or less</a>
                     </div>
                 </li>
-
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dish Types
+                    </a>
+                    <div class="dropdown-menu types" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Lunch</a>
+                        <a class="dropdown-item" href="#">Main Course</a>
+                        <a class="dropdown-item" href="#">Dinner</a>
+                    </div>
+                </li>
+               
         </div>
     </nav>
     {{{body}}}
