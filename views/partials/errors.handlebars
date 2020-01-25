@@ -1,0 +1,12 @@
+{{!-- Error handling --}}
+
+{{!-- this is for a passport message --}}
+{{#if error}} 
+  <div class="div alert alert-danger">{{error}}</div>
+{{/if}}
+
+{{#each errors}}
+  <div class="div alert alert-danger">{{text}}</div>
+{{else}}
+
+{{/each}}

@@ -18,7 +18,7 @@ const ensureAuthenticated = require("./usersAuthHelper");
 // });
 
 router.get("/", (req, res) => {
-    res.render("index");
+  res.render("index");
 });
 
 // User's personalized page route
@@ -36,7 +36,7 @@ router.get("/:id", ensureAuthenticated, (req, res) => {
 });
 
 // Mark a recipe as favorite
-router.put("/favorite/:recipeId", function(req, res) {
+router.put("/favorite/:recipeId", function (req, res) {
   console.log(`userid: ${req.user.id}, recipeid: ${req.params.recipeId}`);
   db.UserProfile.findOrCreate({
     where: {
@@ -88,7 +88,7 @@ router.put("/favorite/:recipeId", function(req, res) {
 
 // Mark a recipe as "posted" by the user
 // router.post("/posted/:recipeId", ensureAuthenticated, function (req, res) {
-router.post("/posted/:recipeId", function(req, res, next) {
+router.post("/posted/:recipeId", function (req, res, next) {
   if (!req.user) res.end("Unable to identify userId for recipe post");
   console.log(`userid: ${req.user.id}, recipeid: ${req.params.recipeId}`);
 
