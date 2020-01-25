@@ -27,7 +27,8 @@
   },
   "scripts": {
     "test": "npm run lint && cross-env NODE_ENV=test mocha --reporter spec --exit",
-    "start": "node server.js"
+    "start": "node server.js",
+    "compile:sass": "node-sass sass/main.scss styles/style.css -w"
   },
   "repository": {
     "type": "git",
