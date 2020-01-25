@@ -46,6 +46,8 @@ app.use(require("./routes/users.js"));
 console.log("After users");
 app.use(require("./routes/usersAuthHelper.js"));
 console.log("After usersAuthHelper");
+app.use(require(".routes/apiRoutes.js"));
+app.use(require(".routes/htmlRoutes.js"))
 
 var syncOptions = { force: false };
 
@@ -56,8 +58,8 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync(syncOptions).then(function () {
+  app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
